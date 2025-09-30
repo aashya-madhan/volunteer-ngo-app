@@ -2,44 +2,74 @@ import React, { useState } from "react";
 import LandingPage from "./components/LandingPage";
 import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
+import VolunteerSignup from "./components/VolunteerSignup";
+import NGOSignup from "./components/NGOSignup";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
-import HomePage from "./components/home"; // ✅ import HomePage
+import Home from "./components/home";
+
+// ✅ Import the background image from src/assets
+import background from "./assets/background.jpg";
 
 function App() {
-  const [page, setPage] = useState("landing");
+  const [currentPage, setCurrentPage] = useState("landing");
+
+  // ✅ Global logout function
+  const handleLogout = () => {
+    setCurrentPage("landing");
+  };
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center relative"
       style={{
-        backgroundImage: "url('/background_image.jpg')", // from public/
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
       }}
     >
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      {currentPage === "landing" && (
+        <LandingPage onSwitchToLogin={() => setCurrentPage("login")} />
+      )}
 
-      <div className="relative z-10">
-        {page === "landing" && (
-          <LandingPage onGetStarted={() => setPage("login")} />
-        )}
-        {page === "login" && (
-          <LoginPage
-            onSwitchToSignup={() => setPage("signup")}
-            onBack={() => setPage("landing")}
-            onForgotPassword={() => setPage("forgot")}
-            onLoginSuccess={() => setPage("home")} // ✅ after login go to home
-          />
-        )}
-        {page === "signup" && (
-          <SignupPage
-            onBack={() => setPage("login")}
-            onSignupSuccess={() => setPage("home")} // ✅ after signup go to home
-          />
-        )}
-        {page === "forgot" && (
-          <ForgotPasswordPage onBack={() => setPage("login")} />
-        )}
-        {page === "home" && <HomePage onLogout={() => setPage("landing")} />} 
-      </div>
+      {currentPage === "login" && (
+        <LoginPage
+          onBack={() => setCurrentPage("landing")}
+          onSwitchToSignup={() => setCurrentPage("signup")}
+          onForgotPassword={() => setCurrentPage("forgot")}
+          onLoginSuccess={() => setCurrentPage("home")}
+        />
+      )}
+
+      {currentPage === "signup" && (
+        <SignupPage
+          onBack={() => setCurrentPage("landing")}
+          onSwitchToLogin={() => setCurrentPage("login")}
+          onSwitchToVolunteer={() => setCurrentPage("volunteerSignup")}
+          onSwitchToNGO={() => setCurrentPage("ngoSignup")}
+        />
+      )}
+
+      {currentPage === "volunteerSignup" && (
+        <VolunteerSignup
+          onBack={() => setCurrentPage("signup")}
+          onSwitchToLogin={() => setCurrentPage("login")}
+        />
+      )}
+
+      {currentPage === "ngoSignup" && (
+        <NGOSignup
+          onBack={() => setCurrentPage("signup")}
+          onSwitchToLogin={() => setCurrentPage("login")}
+        />
+      )}
+
+      {currentPage === "forgot" && (
+        <ForgotPasswordPage onBack={() => setCurrentPage("login")} />
+      )}
+
+      {currentPage === "home" && (
+        <Home onLogout={handleLogout} />  
+      )}
     </div>
   );
 }

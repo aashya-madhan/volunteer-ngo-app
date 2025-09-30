@@ -5,7 +5,5 @@
 /* Optional global resets */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  color: white;
+  padding: 0;
 }
-

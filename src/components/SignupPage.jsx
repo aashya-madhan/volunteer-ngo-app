@@ -1,107 +1,62 @@
 import React, { useState } from "react";
+import AuthLayout from "./AuthLayout";
 
-function SignupPage({ onBack, onSignupSuccess }) {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    fullName: "",
-    role: "Volunteer",
-    location: "",
-    skills: "",
-    orgName: "",
-    orgDescription: "",
-    website: "",
-  });
-  const [message, setMessage] = useState("");
+function SignupPage({ onBack, onSwitchToLogin, onSwitchToVolunteer, onSwitchToNGO }) {
+  const [role, setRole] = useState("Volunteer");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.username || !formData.email || !formData.password || !formData.fullName) {
-      setMessage("⚠️ Please fill all required fields");
-      return;
+  const handleNext = () => {
+    if (role === "Volunteer") {
+      onSwitchToVolunteer();
+    } else {
+      onSwitchToNGO();
     }
-
-    localStorage.setItem("user", JSON.stringify(formData));
-    setMessage("✅ Account created successfully!");
-    setTimeout(() => onSignupSuccess(), 1500);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="bg-white text-black p-10 rounded-2xl shadow-lg w-[500px]">
-        <h2 className="text-3xl font-bold mb-2 text-center">Create an Account</h2>
-        <p className="text-gray-500 mb-6 text-center">
-          Join SkillBridge to connect with NGOs and volunteering opportunities
-        </p>
+    <AuthLayout>
+      <h2 className="text-2xl font-bold text-green-700 mb-4 text-center">Create an Account</h2>
+      <p className="text-gray-600 text-center mb-6">
+        Join <span className="font-semibold text-green-700">SkillBridge</span> to connect with NGOs and volunteering opportunities.
+      </p>
 
-        {message && <p className="mb-3 text-center text-sm">{message}</p>}
+      {/* Role Selection */}
+      <div className="mb-6">
+        <label className="block text-black mb-2">I am a</label>
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+        >
+          <option value="Volunteer">Volunteer</option>
+          <option value="NGO">NGO / Organization</option>
+        </select>
+      </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input type="text" name="username" placeholder="Username"
-            value={formData.username} onChange={handleChange}
-            className="p-3 border rounded-lg" required />
+      <button
+        onClick={handleNext}
+        className="btn-primary w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 bg-green-600 text-white shadow hover:bg-green-700 transition"
+      >
+        Next
+      </button>
 
-          <input type="email" name="email" placeholder="Email"
-            value={formData.email} onChange={handleChange}
-            className="p-3 border rounded-lg" required />
-
-          <input type="password" name="password" placeholder="Password"
-            value={formData.password} onChange={handleChange}
-            className="p-3 border rounded-lg" required />
-
-          <input type="text" name="fullName" placeholder="Full Name"
-            value={formData.fullName} onChange={handleChange}
-            className="p-3 border rounded-lg" required />
-
-          <select name="role" value={formData.role} onChange={handleChange}
-            className="p-3 border rounded-lg">
-            <option value="Volunteer">Volunteer</option>
-            <option value="NGO">NGO / Organization</option>
-          </select>
-
-          <input type="text" name="location" placeholder="Location (Optional)"
-            value={formData.location} onChange={handleChange}
-            className="p-3 border rounded-lg" />
-
-          {formData.role === "Volunteer" && (
-            <input type="text" name="skills" placeholder="Skills (Optional)"
-              value={formData.skills} onChange={handleChange}
-              className="p-3 border rounded-lg" />
-          )}
-
-          {formData.role === "NGO" && (
-            <>
-              <input type="text" name="orgName" placeholder="Organization Name"
-                value={formData.orgName} onChange={handleChange}
-                className="p-3 border rounded-lg" />
-
-              <textarea name="orgDescription" placeholder="Organization Description"
-                value={formData.orgDescription} onChange={handleChange}
-                className="p-3 border rounded-lg" />
-
-              <input type="url" name="website" placeholder="Website URL (Optional)"
-                value={formData.website} onChange={handleChange}
-                className="p-3 border rounded-lg" />
-            </>
-          )}
-
-          <button type="submit"
-            className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600">
-            Create Account
+      <div className="text-center mt-4">
+        <p className="text-sm text-black">
+          Already have an account?{" "}
+          <button
+            onClick={onSwitchToLogin}
+            className="text-black hover:underline font-medium px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 bg-green-600  shadow hover:bg-green-700 transition"
+          >
+            Sign in
           </button>
-        </form>
-
-        <button onClick={onBack} className="mt-4 text-gray-600 hover:underline block text-center">
+        </p>
+        <button
+          onClick={onBack}
+          className="mt-3 text-sm text-black hover:underline px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 bg-green-600 shadow hover:bg-green-700 transition"
+        >
           ← Back
         </button>
       </div>
-    </div>
+    </AuthLayout>
   );
 }
 
