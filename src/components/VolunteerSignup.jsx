@@ -163,7 +163,7 @@ function VolunteerSignup({ onBack }) {
           <button
             type="button"
             onClick={onBack}
-            className="w-full border border-green-600 text-green-600 font-semibold py-2 rounded-md hover:bg-green-50 transition"
+            className="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition"
           >
             ← Back
           </button>
