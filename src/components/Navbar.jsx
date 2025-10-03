@@ -17,7 +17,7 @@ function Navbar({ onNavigate }) {
             className="h-10 w-10 object-contain"
           />
           <span className="font-bold text-lg text-green-600">
-            Volunteer-NGO
+            SKILLBRIDGE
           </span>
         </div>
 

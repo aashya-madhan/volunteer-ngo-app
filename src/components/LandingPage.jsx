@@ -50,19 +50,19 @@ function LandingPage({ onSwitchToLogin }) {
       <section className="mt-16 bg-green-50 py-10">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           <div>
-            <h2 className="text-3xl font-bold text-green-700">81,608</h2>
+            <h2 className="text-3xl font-bold text-green-700">50,000</h2>
             <p className="text-gray-600">Volunteers</p>
           </div>
           <div>
-            <h2 className="text-3xl font-bold text-green-700">350</h2>
+            <h2 className="text-3xl font-bold text-green-700">500</h2>
             <p className="text-gray-600">NGOs</p>
           </div>
           <div>
-            <h2 className="text-3xl font-bold text-green-700">3,132</h2>
+            <h2 className="text-3xl font-bold text-green-700">5,150</h2>
             <p className="text-gray-600">Projects</p>
           </div>
           <div>
-            <h2 className="text-3xl font-bold text-green-700">₹2,099,965</h2>
+            <h2 className="text-3xl font-bold text-green-700">₹5,000,109</h2>
             <p className="text-gray-600">CSR Impact</p>
           </div>
         </div>

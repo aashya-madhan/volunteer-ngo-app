@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function VolunteerSignup() {
+function VolunteerSignup({ onBack }) {
   const [formData, setFormData] = useState({
     username: "",
     fullName: "",
@@ -20,14 +20,36 @@ function VolunteerSignup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Volunteer Signup Data:", formData);
-    alert("Account created successfully!"); // ✅ replace later with backend call
+    alert("Account created successfully!");
   };
 
+  // Prevent background scroll
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
   return (
-    <div className="app-background flex items-center justify-center min-h-screen">
-      <div className="bg-white bg-opacity-90 p-8 rounded-2xl shadow-lg w-full max-w-2xl">
-        
-        <h2 className="text-2xl font-bold text-center mb-6">Volunteer Signup</h2>
+    <div
+      className="flex items-center justify-center min-h-screen py-16 bg-cover bg-center"
+      style={{ backgroundImage: "url('/assets/background.jpg')" }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/30" />
+
+      {/* Floating Box */}
+      <div className="relative bg-white/80 backdrop-blur-md rounded-2xl shadow-lg w-full max-w-3xl p-8 border border-gray-200 z-10">
+        <h2 className="text-2xl font-bold text-center mb-2 text-green-700">
+          Volunteer Signup
+        </h2>
+        <p className="text-center text-gray-600 mb-6">
+          Join{" "}
+          <span className="font-semibold text-green-700">SkillBridge</span> to
+          connect with NGOs and showcase your skills.
+        </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Username + Full Name */}
@@ -38,7 +60,7 @@ function VolunteerSignup() {
               placeholder="Username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
               required
             />
             <input
@@ -47,7 +69,7 @@ function VolunteerSignup() {
               placeholder="Full Name"
               value={formData.fullName}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
               required
             />
           </div>
@@ -59,7 +81,7 @@ function VolunteerSignup() {
             placeholder="Email ID"
             value={formData.email}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
             required
           />
 
@@ -70,7 +92,7 @@ function VolunteerSignup() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
             required
           />
 
@@ -82,14 +104,14 @@ function VolunteerSignup() {
               placeholder="Contact"
               value={formData.contact}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
               required
             />
             <select
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
               required
             >
               <option value="">Select Gender</option>
@@ -107,7 +129,7 @@ function VolunteerSignup() {
               placeholder="Availability (e.g. Weekends)"
               value={formData.availability}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
             />
             <input
               type="text"
@@ -115,18 +137,18 @@ function VolunteerSignup() {
               placeholder="Skills"
               value={formData.skills}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
             />
           </div>
 
-          {/* Location (full row) */}
+          {/* Location */}
           <input
             type="text"
             name="location"
             placeholder="Location"
             value={formData.location}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded-md focus:ring-2 focus:ring-green-400"
           />
 
           {/* Submit */}
@@ -137,14 +159,14 @@ function VolunteerSignup() {
             Create Account
           </button>
 
+          {/* Back Button */}
           <button
-  type="button"
-  onClick={() => window.location.href = "/login"}
-  className="mb-4 px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
->
-  ← Back
-</button>
-
+            type="button"
+            onClick={onBack}
+            className="w-full border border-green-600 text-green-600 font-semibold py-2 rounded-md hover:bg-green-50 transition"
+          >
+            ← Back
+          </button>
         </form>
       </div>
     </div>

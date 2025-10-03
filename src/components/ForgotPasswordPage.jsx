@@ -1,61 +1,66 @@
-import React, { useState } from "react";
-import InputField from "./InputField";
+import React, { useState, useEffect } from "react";
 
-const ForgotPasswordPage = ({ onBack }) => {
+function ForgotPasswordPage({ onBack, onSwitchToLogin }) {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = () => {
-    if (!email) {
-      alert("Please enter your email address.");
-      return;
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
     alert(`Password reset link sent to ${email}`);
   };
 
+  // ✅ Prevent background scrolling
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-cover bg-center" 
-         style={{ backgroundImage: "url('/background.jpg')" }}>
-      <div className="bg-[#2F4858]/95 p-8 rounded-2xl shadow-lg w-full max-w-sm text-black">
+    <div
+      className="fixed inset-0 flex items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: "url('/assets/background.jpg')" }}
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/20" />
+
+      {/* Floating Box */}
+      <div className="relative bg-white/80 backdrop-blur-md rounded-2xl shadow-lg w-full max-w-md p-8 border border-gray-200 z-10">
         
-        {/* App Title */}
-        <h1 className="text-2xl font-bold text-center mb-2 text-green-400">
-          SKILLBRIDGE
-        </h1>
-        <p className="text-gray-300 text-sm text-center mb-6">
-          Enter your email to reset your password
-        </p>
+        <h2 className="text-2xl font-bold text-center text-green-700 mb-6">
+          Forgot Password
+        </h2>
 
-        {/* Email Input */}
-        <InputField
-          label="Email Address"
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your registered email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-green-300"
+          />
 
-        {/* Reset Button */}
-        <button
-          onClick={handleSubmit}
-          className="w-full mt-4 bg-green-400 text-black font-semibold py-2 rounded-md hover:bg-green-500 transition"
-        >
-          Send Reset Link
-        </button>
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+          >
+            Send Reset Link
+          </button>
+        </form>
 
         {/* Back Button */}
-      
-      <div className="mt-4 text-center">
-      <button
-          onClick={onBack}
-          className="w-full bg-gray-200 text-black font-bold text-lg py-2 rounded-md hover:bg-gray-300 transition"
-  >
-    ← Back to Login
-      </button>
-          
+        <div className="mt-6 flex flex-col space-y-3">
+          <button
+            onClick={onBack}
+            className="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-500 transition"
+          >
+            ← Back
+          </button>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default ForgotPasswordPage;

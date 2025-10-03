@@ -6,6 +6,10 @@ import VolunteerSignup from "./components/VolunteerSignup";
 import NGOSignup from "./components/NGOSignup";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
 import Home from "./components/home";
+import Volunteers from "./Volunteers";
+import NGOs from "./NGOs";
+import Projects from "./Projects";
+import AboutUs from "./AboutUs";
 
 // Import Navbar + Footer
 import Navbar from "./components/Navbar";
@@ -63,6 +67,14 @@ function App() {
         return <ForgotPasswordPage onBack={() => setCurrentPage("login")} />;
       case "home":
         return <Home onLogout={handleLogout} />;
+      case "volunteers":
+        return <Volunteers />;
+      case "ngos":
+        return <NGOs />;
+      case "projects":
+        return <Projects />;
+      case "about":
+        return <AboutUs />;
       default:
         return <LandingPage onSwitchToLogin={() => setCurrentPage("login")} />;
     }
