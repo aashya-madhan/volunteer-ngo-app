@@ -43,13 +43,14 @@ const ForgotPasswordPage = ({ onBack }) => {
         </button>
 
         {/* Back Button */}
-        <div className="mt-6 text-center">
-          <button
-            onClick={onBack}
-            className="text-xs text-black hover:text-white  font-semibold py-2 hover:underline transition"
-          >
-            ← Back to Login
-          </button>
+      
+      <div className="mt-4 text-center">
+      <button
+          onClick={onBack}
+          className="w-full bg-gray-200 text-black font-bold text-lg py-2 rounded-md hover:bg-gray-300 transition"
+  >
+    ← Back to Login
+      </button>
           
         </div>
       </div>

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import InputField from "./InputField";
 
-function VolunteerSignup({ onBack, onSwitchToLogin }) {
+function VolunteerSignup() {
   const [formData, setFormData] = useState({
     username: "",
+    fullName: "",
     email: "",
     password: "",
-    fullName: "",
     contact: "",
-    location: "",
-    skills: "",
+    gender: "",
     availability: "",
+    skills: "",
+    location: "",
   });
 
   const handleChange = (e) => {
@@ -19,48 +19,133 @@ function VolunteerSignup({ onBack, onSwitchToLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("volunteerUser", JSON.stringify(formData));
-    alert("Volunteer account created successfully!");
-    onSwitchToLogin();
+    console.log("Volunteer Signup Data:", formData);
+    alert("Account created successfully!"); // ✅ replace later with backend call
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg">
-        <h2 className="text-2xl font-bold text-center mb-2">Volunteer Signup</h2>
-        <p className="text-gray-500 text-center mb-6">
-          Join SkillBridge to connect with NGOs and volunteering opportunities
-        </p>
+    <div className="app-background flex items-center justify-center min-h-screen">
+      <div className="bg-white bg-opacity-90 p-8 rounded-2xl shadow-lg w-full max-w-2xl">
+        
+        <h2 className="text-2xl font-bold text-center mb-6">Volunteer Signup</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <InputField label="Username" name="username" type="text" placeholder="Choose a username" value={formData.username} onChange={handleChange} required />
-          <InputField label="Email" name="email" type="email" placeholder="Enter your email" value={formData.email} onChange={handleChange} required />
-          <InputField label="Password" name="password" type="password" placeholder="Create a password" value={formData.password} onChange={handleChange} required />
-          <InputField label="Full Name" name="fullName" type="text" placeholder="Enter your full name" value={formData.fullName} onChange={handleChange} required />
-          <InputField label="Contact Number" name="contact" type="tel" placeholder="Enter your phone number" value={formData.contact} onChange={handleChange} required />
+          {/* Username + Full Name */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Full Name"
+              value={formData.fullName}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+          </div>
 
-          <hr className="my-4" />
-          <p className="text-sm font-semibold text-gray-600">Additional Information (Optional)</p>
-          <InputField label="Location" name="location" type="text" placeholder="e.g. New York, NY" value={formData.location} onChange={handleChange} />
-          <InputField label="Skills" name="skills" type="text" placeholder="e.g. web development, teaching, design" value={formData.skills} onChange={handleChange} />
-          <InputField label="Availability" name="availability" type="text" placeholder="e.g. weekends, evenings, 10 hrs/week" value={formData.availability} onChange={handleChange} />
+          {/* Email */}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email ID"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+            required
+          />
 
-          <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+          {/* Password */}
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+            required
+          />
+
+          {/* Contact + Gender */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="contact"
+              placeholder="Contact"
+              value={formData.contact}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            />
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+              required
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* Availability + Skills */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input
+              type="text"
+              name="availability"
+              placeholder="Availability (e.g. Weekends)"
+              value={formData.availability}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+            <input
+              type="text"
+              name="skills"
+              placeholder="Skills"
+              value={formData.skills}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+          </div>
+
+          {/* Location (full row) */}
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            value={formData.location}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+
+          {/* Submit */}
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
+          >
             Create Account
           </button>
-        </form>
 
-        <div className="text-center mt-4">
-          <p className="text-sm text-gray-600">
-            Already have an account?{" "}
-            <button onClick={onSwitchToLogin} className="text-blue-600 hover:underline">
-              Sign in
-            </button>
-          </p>
-          <button onClick={onBack} className="mt-2 text-sm text-gray-500 hover:underline">
-            ← Back
-          </button>
-        </div>
+          <button
+  type="button"
+  onClick={() => window.location.href = "/login"}
+  className="mb-4 px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
+>
+  ← Back
+</button>
+
+        </form>
       </div>
     </div>
   );

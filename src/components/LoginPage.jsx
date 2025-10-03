@@ -90,7 +90,7 @@ function LoginPage({ onBack, onSwitchToSignup, onForgotPassword, onLoginSuccess,
             onClick={onSwitchToSignup}
             className="text-green-700 hover:underline"
           >
-            Don&apos;t have an account? Join us now!
+            Don't have an account? Join us now!
           </button>
           <button
             onClick={onForgotPassword}

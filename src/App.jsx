@@ -7,6 +7,10 @@ import NGOSignup from "./components/NGOSignup";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
 import Home from "./components/home";
 
+// Import Navbar + Footer
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 // ✅ Import the background image from src/assets
 import background from "./assets/background.jpg";
 
@@ -18,6 +22,52 @@ function App() {
     setCurrentPage("landing");
   };
 
+  // ✅ Page renderer
+  const renderPage = () => {
+    switch (currentPage) {
+      case "landing":
+        return <LandingPage onSwitchToLogin={() => setCurrentPage("login")} />;
+      case "login":
+        return (
+          <LoginPage
+            onBack={() => setCurrentPage("landing")}
+            onSwitchToSignup={() => setCurrentPage("signup")}
+            onForgotPassword={() => setCurrentPage("forgot")}
+            onLoginSuccess={() => setCurrentPage("home")}
+          />
+        );
+      case "signup":
+        return (
+          <SignupPage
+            onBack={() => setCurrentPage("landing")}
+            onSwitchToLogin={() => setCurrentPage("login")}
+            onSwitchToVolunteer={() => setCurrentPage("volunteerSignup")}
+            onSwitchToNGO={() => setCurrentPage("ngoSignup")}
+          />
+        );
+      case "volunteerSignup":
+        return (
+          <VolunteerSignup
+            onBack={() => setCurrentPage("signup")}
+            onSwitchToLogin={() => setCurrentPage("login")}
+          />
+        );
+      case "ngoSignup":
+        return (
+          <NGOSignup
+            onBack={() => setCurrentPage("signup")}
+            onSwitchToLogin={() => setCurrentPage("login")}
+          />
+        );
+      case "forgot":
+        return <ForgotPasswordPage onBack={() => setCurrentPage("login")} />;
+      case "home":
+        return <Home onLogout={handleLogout} />;
+      default:
+        return <LandingPage onSwitchToLogin={() => setCurrentPage("login")} />;
+    }
+  };
+
   return (
     <div
       style={{
@@ -25,51 +75,18 @@ function App() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {currentPage === "landing" && (
-        <LandingPage onSwitchToLogin={() => setCurrentPage("login")} />
-      )}
+      {/* ✅ Navbar always visible */}
+      <Navbar onNavigate={setCurrentPage} />
 
-      {currentPage === "login" && (
-        <LoginPage
-          onBack={() => setCurrentPage("landing")}
-          onSwitchToSignup={() => setCurrentPage("signup")}
-          onForgotPassword={() => setCurrentPage("forgot")}
-          onLoginSuccess={() => setCurrentPage("home")}
-        />
-      )}
+      {/* ✅ Content area */}
+      <div className="flex-grow pt-20 px-6">{renderPage()}</div>
 
-      {currentPage === "signup" && (
-        <SignupPage
-          onBack={() => setCurrentPage("landing")}
-          onSwitchToLogin={() => setCurrentPage("login")}
-          onSwitchToVolunteer={() => setCurrentPage("volunteerSignup")}
-          onSwitchToNGO={() => setCurrentPage("ngoSignup")}
-        />
-      )}
-
-      {currentPage === "volunteerSignup" && (
-        <VolunteerSignup
-          onBack={() => setCurrentPage("signup")}
-          onSwitchToLogin={() => setCurrentPage("login")}
-        />
-      )}
-
-      {currentPage === "ngoSignup" && (
-        <NGOSignup
-          onBack={() => setCurrentPage("signup")}
-          onSwitchToLogin={() => setCurrentPage("login")}
-        />
-      )}
-
-      {currentPage === "forgot" && (
-        <ForgotPasswordPage onBack={() => setCurrentPage("login")} />
-      )}
-
-      {currentPage === "home" && (
-        <Home onLogout={handleLogout} />  
-      )}
+      {/* ✅ Footer always visible */}
+      <Footer />
     </div>
   );
 }
